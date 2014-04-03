@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		228D3B0A18ECAE810077AE2B /* iphone_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 228D3B0918ECAE810077AE2B /* iphone_white@2x.png */; };
 		22D3F46018EB334900392C16 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D3F45F18EB334900392C16 /* Cocoa.framework */; };
 		22D3F46A18EB334900392C16 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 22D3F46818EB334900392C16 /* InfoPlist.strings */; };
 		22D3F46C18EB334900392C16 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D3F46B18EB334900392C16 /* main.m */; };
@@ -19,7 +20,6 @@
 		22D3F48818EB334900392C16 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 22D3F48618EB334900392C16 /* InfoPlist.strings */; };
 		22D3F48A18EB334900392C16 /* FrameviewOSXTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D3F48918EB334900392C16 /* FrameviewOSXTests.m */; };
 		22D3F49418EB35E500392C16 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D3F49318EB35E500392C16 /* WebKit.framework */; };
-		22D3F4A118EB8B8800392C16 /* PrototypeViewerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D3F4A018EB8B8800392C16 /* PrototypeViewerWindow.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		228D3B0918ECAE810077AE2B /* iphone_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iphone_white@2x.png"; sourceTree = "<group>"; };
 		22D3F45C18EB334900392C16 /* FrameviewOSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrameviewOSX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22D3F45F18EB334900392C16 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		22D3F46218EB334900392C16 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -53,8 +54,6 @@
 		22D3F48718EB334900392C16 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		22D3F48918EB334900392C16 /* FrameviewOSXTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FrameviewOSXTests.m; sourceTree = "<group>"; };
 		22D3F49318EB35E500392C16 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		22D3F49F18EB8B8800392C16 /* PrototypeViewerWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrototypeViewerWindow.h; sourceTree = "<group>"; };
-		22D3F4A018EB8B8800392C16 /* PrototypeViewerWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrototypeViewerWindow.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,8 +126,6 @@
 				22D3F47418EB334900392C16 /* MainMenu.xib */,
 				22D3F47718EB334900392C16 /* Images.xcassets */,
 				22D3F46618EB334900392C16 /* Supporting Files */,
-				22D3F49F18EB8B8800392C16 /* PrototypeViewerWindow.h */,
-				22D3F4A018EB8B8800392C16 /* PrototypeViewerWindow.m */,
 			);
 			path = FrameviewOSX;
 			sourceTree = "<group>";
@@ -136,6 +133,7 @@
 		22D3F46618EB334900392C16 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				228D3B0918ECAE810077AE2B /* iphone_white@2x.png */,
 				22D3F46718EB334900392C16 /* FrameviewOSX-Info.plist */,
 				22D3F46818EB334900392C16 /* InfoPlist.strings */,
 				22D3F46B18EB334900392C16 /* main.m */,
@@ -241,6 +239,7 @@
 			files = (
 				22D3F46A18EB334900392C16 /* InfoPlist.strings in Resources */,
 				22D3F47818EB334900392C16 /* Images.xcassets in Resources */,
+				228D3B0A18ECAE810077AE2B /* iphone_white@2x.png in Resources */,
 				22D3F47018EB334900392C16 /* Credits.rtf in Resources */,
 				22D3F47618EB334900392C16 /* MainMenu.xib in Resources */,
 			);
@@ -261,7 +260,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22D3F4A118EB8B8800392C16 /* PrototypeViewerWindow.m in Sources */,
 				22D3F47318EB334900392C16 /* AppDelegate.m in Sources */,
 				22D3F46C18EB334900392C16 /* main.m in Sources */,
 			);
@@ -476,6 +474,7 @@
 				22D3F48F18EB334900392C16 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		22D3F49018EB334900392C16 /* Build configuration list for PBXNativeTarget "FrameviewOSXTests" */ = {
 			isa = XCConfigurationList;
@@ -484,6 +483,7 @@
 				22D3F49218EB334900392C16 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
