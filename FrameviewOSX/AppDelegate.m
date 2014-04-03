@@ -13,18 +13,24 @@
 {
     BOOL isRetina;
     BOOL isIphone;
-    NSImageView *phoneImageView;
     NSImage *phoneImage;
     NSView* _centerView;
-    __weak NSView* _contentView;
+    NSView* _contentView;
     CALayer* _phoneImageLayer;
+    CALayer* _centerLayer;
+    
 }
 @synthesize window;
 @synthesize prototypeWebView;
 
+static NSString *SaveToolbarItemIdentifier = @"My Save Toolbar Item";
+static NSString *SearchToolbarItemIdentifier = @"My Search Toolbar Item";
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [[self window] setDelegate:self];
+
+    isIphone = true;
 
     //Determine isRetina
     CGFloat backingScaleFactor = self.window.screen.backingScaleFactor;
@@ -36,27 +42,26 @@
 
     _contentView = window.contentView;
 
-    NSImage* iphoneImage = [NSImage imageNamed:@"iphone_white@2x"];
-    NSSize iphoneImageSize = iphoneImage.size;
-    _centerView = [[NSView alloc] initWithFrame:(NSRect){0,0,iphoneImageSize.width,iphoneImageSize.height}];
+    phoneImage = [NSImage imageNamed:@"iphone_white@2x"];
+    NSSize phoneImageSize = phoneImage.size;
+    _centerView = [[NSView alloc] initWithFrame:(NSRect){0,0,(isRetina ? phoneImageSize.width : phoneImageSize.width*2),(isRetina ? phoneImageSize.height : phoneImageSize.height*2)}];
     _centerView.wantsLayer = YES;
-    CALayer* centerLayer = _centerView.layer;
+    _centerLayer = _centerView.layer;
     _phoneImageLayer = [CALayer layer];
-    _phoneImageLayer.contents = [iphoneImage layerContentsForContentsScale:backingScaleFactor];
+    _phoneImageLayer.contents = [phoneImage layerContentsForContentsScale:backingScaleFactor];
     _phoneImageLayer.contentsGravity = kCAGravityResizeAspect;
-    _phoneImageLayer.frame = (CGRect){0,0,iphoneImageSize.width,iphoneImageSize.height};
-    [centerLayer addSublayer:_phoneImageLayer];
+    _phoneImageLayer.frame = (CGRect){0,0,(isRetina ? phoneImageSize.width : phoneImageSize.width*2),(isRetina ? phoneImageSize.height : phoneImageSize.height*2)};
+    [_centerLayer addSublayer:_phoneImageLayer];
     [_contentView addSubview:_centerView];
 
-    NSRect webViewBounds = (NSRect){0,0,320,568};
-    webViewBounds.origin.x = (iphoneImageSize.width - webViewBounds.size.width) / 2;
-    webViewBounds.origin.y = (iphoneImageSize.height - webViewBounds.size.height) / 2;
+    NSRect webViewBounds = (NSRect){0,0,(isRetina ? 320 : 640),(isRetina ? 568 : 1136)};
+    webViewBounds.origin.x = ((isRetina ? phoneImageSize.width : phoneImageSize.width*2) - webViewBounds.size.width) / 2;
+    webViewBounds.origin.y = ((isRetina ? phoneImageSize.height : phoneImageSize.height*2) - webViewBounds.size.height) / 2;
     prototypeWebView = [[WebView alloc] initWithFrame:webViewBounds];
     [_centerView addSubview:prototypeWebView];
 
-
     //Set up my web view to hold the prototypes
-    NSString *urlAddress = @"file:///Users/puckett/Dropbox%20(Dropbox)/Public/lightbox/lightbox/index.html";
+    NSString *urlAddress = @"";
     NSURL *url = [NSURL URLWithString:urlAddress];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     [prototypeWebView.mainFrame loadRequest:requestObj];
@@ -73,24 +78,23 @@
 
 - (void)contentViewBoundsDidChange:(NSNotification*)notification
 {
-    [_centerView scaleUnitSquareToSize:[_centerView convertSize:(NSSize){1.0, 1.0} fromView:nil]];
+    [_centerView scaleUnitSquareToSize:[_centerView convertSize:(NSSize){1, 1} fromView:nil]];
 
     NSSize contentSize = _contentView.frame.size;
     NSRect centerViewBounds = _centerView.bounds;
 
-    CGFloat centerViewScale = (contentSize.height / centerViewBounds.size.height) * 0.8;
+    CGFloat centerViewScale = (contentSize.height / (centerViewBounds.size.height + 10)) * 0.8;
     CGFloat aspectRatio = centerViewBounds.size.width / centerViewBounds.size.height;
-    NSLog(@"Center View Height  is :%f", centerViewBounds.size.height);
     CGSize scaledSize;
     scaledSize.height = (centerViewBounds.size.height * centerViewScale);
     scaledSize.width = scaledSize.height * aspectRatio;
 
     [_centerView setFrameOrigin:(NSPoint){
-        (contentSize.width - scaledSize.width) / 2,
-        (contentSize.height - scaledSize.height) / 2
+        (floorf(contentSize.width) - floorf(scaledSize.width)) / 2,
+        (floorf(contentSize.height) - floorf(scaledSize.height)) / 2
     }];
 
-        [_centerView scaleUnitSquareToSize:(NSSize){centerViewScale, centerViewScale}];
+    [_centerView scaleUnitSquareToSize:(NSSize){centerViewScale, centerViewScale}];
 }
 
 
@@ -113,4 +117,36 @@
     [self setupWebView];
 }
 
+- (IBAction)buttonPressed:(NSButton *)sender {
+
+}
+
+-(void)windowDidEnterFullScreen:(NSNotification *)notification {
+    [self contentViewBoundsDidChange:nil];
+}
+
+- (IBAction)deviceDidChange:(NSSegmentedControl *)sender {
+    CGFloat backingScaleFactor = self.window.screen.backingScaleFactor;
+
+    NSImage *androidPhoneImage;
+    if (isIphone) {
+        androidPhoneImage = [NSImage imageNamed:@"nexus@2x"];
+    }
+    else {
+        androidPhoneImage = [NSImage imageNamed:@"iphone_white@2x"];
+    }
+    NSSize phoneImageSize = androidPhoneImage.size;
+    [_centerView setFrame:(CGRect){0,0,(isRetina ? phoneImageSize.width : phoneImageSize.width*2),(isRetina ? phoneImageSize.height : phoneImageSize.height*2)}];
+    _phoneImageLayer.contents = [androidPhoneImage layerContentsForContentsScale:backingScaleFactor];
+    [_phoneImageLayer setFrame:(CGRect){0,0,(isRetina ? phoneImageSize.width : phoneImageSize.width*2),(isRetina ? phoneImageSize.height : phoneImageSize.height*2)}];
+
+    NSRect webViewBounds = (NSRect){0,0,(isIphone ? (isRetina ? 360 : 720) : (isRetina ? 320 : 640)),(isIphone ? (isRetina ? 640 : 1280) : (isRetina ? 568 : 1136))};
+    webViewBounds.origin.x = ((isRetina ? phoneImageSize.width : phoneImageSize.width*2) - webViewBounds.size.width) / 2;
+    webViewBounds.origin.y = ((isRetina ? phoneImageSize.height : phoneImageSize.height*2) - webViewBounds.size.height) / 2;
+    prototypeWebView.frame = webViewBounds;
+
+    [self contentViewBoundsDidChange:nil];
+    isIphone = !isIphone;
+    NSLog(@"Button clicked");
+}
 @end

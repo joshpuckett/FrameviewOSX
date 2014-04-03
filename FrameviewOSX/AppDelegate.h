@@ -12,6 +12,11 @@
 @interface AppDelegate : NSObject <NSWindowDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
-@property (retain, nonatomic) IBOutlet WebView *prototypeWebView;
+@property (strong) WebView *prototypeWebView;
+@property (weak) IBOutlet NSButton *androidButton;
+- (IBAction)buttonPressed:(NSButton *)sender;
+@property (weak) IBOutlet NSSegmentedControl *device;
+- (IBAction)deviceDidChange:(NSSegmentedControl *)sender;
+
 
 @end

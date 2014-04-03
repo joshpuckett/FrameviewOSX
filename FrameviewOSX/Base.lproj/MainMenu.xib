@@ -13,6 +13,7 @@
         <customObject id="-3" userLabel="Application"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
+                <outlet property="device" destination="6LE-zu-Rk8" id="JZj-3h-jMn"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="4PI-gp-NIw"/>
             </connections>
         </customObject>
@@ -676,6 +677,37 @@
                 <rect key="frame" x="0.0" y="0.0" width="800" height="800"/>
                 <autoresizingMask key="autoresizingMask"/>
             </view>
+            <toolbar key="toolbar" implicitIdentifier="C86E21DC-87CE-4259-92C5-457CD32CCD8A" autosavesConfiguration="NO" displayMode="iconOnly" sizeMode="regular" id="1F3-q2-8Dp">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="PGD-9x-rvA"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="Oaw-ht-98f"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="xMq-Kd-ou4"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="mhr-0N-Cpz"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="WJy-9i-6qv"/>
+                    <toolbarItem implicitItemIdentifier="1D96236D-6339-47E2-94AB-6B42BA61A1F2" label="" paletteLabel="" id="ZkU-AL-DGC">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="67" height="25"/>
+                        <size key="maxSize" width="207" height="30"/>
+                        <segmentedControl key="view" verticalHuggingPriority="750" id="6LE-zu-Rk8">
+                            <rect key="frame" x="0.0" y="14" width="170" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <segmentedCell key="cell" alignment="left" style="texturedRounded" trackingMode="selectOne" id="7nP-wA-yvn">
+                                <font key="font" metaFont="system"/>
+                                <segments>
+                                    <segment label="iPhone" width="63"/>
+                                    <segment label="Android" width="100" selected="YES" tag="1"/>
+                                </segments>
+                            </segmentedCell>
+                            <connections>
+                                <action selector="deviceDidChange:" target="Voe-Tx-rLC" id="fNw-hS-7IB"/>
+                            </connections>
+                        </segmentedControl>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="ZkU-AL-DGC"/>
+                </defaultToolbarItems>
+            </toolbar>
         </window>
     </objects>
 </document>
