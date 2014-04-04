@@ -13,10 +13,12 @@
 
 @property (assign) IBOutlet NSWindow *window;
 @property (strong) WebView *prototypeWebView;
-@property (weak) IBOutlet NSButton *androidButton;
-- (IBAction)buttonPressed:(NSButton *)sender;
 @property (weak) IBOutlet NSSegmentedControl *device;
 - (IBAction)deviceDidChange:(NSSegmentedControl *)sender;
+@property (weak) IBOutlet NSMenuItem *menuItemLog;
+- (IBAction)menuItemLogClicked:(NSMenuItem *)sender;
+
+
 
 
 @end
