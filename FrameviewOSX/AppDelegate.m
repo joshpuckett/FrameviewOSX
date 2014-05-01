@@ -8,10 +8,12 @@
 
 #import "AppDelegate.h"
 #import <WebKit/WebKit.h>
+#import "CustomWebView.h"
 
 @implementation AppDelegate
 {
     BOOL isRetina;
+    BOOL hasHand;
     NSImage *phoneImage;
     NSView* _centerView;
     NSView* _contentView;
@@ -20,7 +22,7 @@
     NSView* _handView;
     CALayer* _handLayer;
     CALayer* _handImageLayer;
-    int currentSegment;
+    long currentSegment;
     NSCursor* _bobble;
     
 }
@@ -28,11 +30,11 @@
 @synthesize prototypeWebView;
 @synthesize device;
 
-static NSString *SaveToolbarItemIdentifier = @"My Save Toolbar Item";
-static NSString *SearchToolbarItemIdentifier = @"My Search Toolbar Item";
-
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    hasHand = YES;
+
+
 
     //Determine isRetina
     CGFloat backingScaleFactor = self.window.screen.backingScaleFactor;
@@ -43,6 +45,10 @@ static NSString *SearchToolbarItemIdentifier = @"My Search Toolbar Item";
     }
 
     _contentView = window.contentView;
+
+    _contentView.layer.backgroundColor = [[NSColor whiteColor] CGColor];
+
+
 
     //Set up the hand view
     NSImage *handImage = [NSImage imageNamed:@"hand@2x"];
@@ -72,7 +78,7 @@ static NSString *SearchToolbarItemIdentifier = @"My Search Toolbar Item";
     NSRect webViewBounds = (NSRect){0,0,(isRetina ? 320 : 640),(isRetina ? 568 : 1136)};
     webViewBounds.origin.x = ((isRetina ? phoneImageSize.width : phoneImageSize.width*2) - webViewBounds.size.width) / 2;
     webViewBounds.origin.y = ((isRetina ? phoneImageSize.height : phoneImageSize.height*2) - webViewBounds.size.height) / 2;
-    prototypeWebView = [[WebView alloc] initWithFrame:webViewBounds];
+    prototypeWebView = [[CustomWebView alloc] initWithFrame:webViewBounds];
     [_centerView addSubview:prototypeWebView];
 
     //Set up my web view to hold the prototypes
@@ -86,8 +92,11 @@ static NSString *SearchToolbarItemIdentifier = @"My Search Toolbar Item";
     [_contentView setPostsFrameChangedNotifications:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contentViewBoundsDidChange:) name:NSViewFrameDidChangeNotification object:_contentView];
 
+    NSImage *iphoneImage = [NSImage imageNamed:@"apple_on@2x"];
     [self contentViewBoundsDidChange:nil];
     currentSegment = [device selectedSegment];
+    [device setImage:iphoneImage forSegment:currentSegment];
+
 }
 
 
@@ -135,6 +144,11 @@ static NSString *SearchToolbarItemIdentifier = @"My Search Toolbar Item";
     if (isRetina) {
         [prototypeWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.body.style.webkitTransformOrigin = '0 0'; document.body.style.webkitTransform = 'scale(%f)';", 0.5]];
     }
+
+
+    [prototypeWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.body.style.cursor = \"url('https://s3-us-west-2.amazonaws.com/tweakapp.co/Framewebview/bobble.png') 32 32, default;\"	"]];
+
+
 }
 
 
@@ -155,8 +169,14 @@ static NSString *SearchToolbarItemIdentifier = @"My Search Toolbar Item";
 
 - (IBAction)deviceDidChange:(NSSegmentedControl *)sender {
 
+    NSImage *iphoneOn = [NSImage imageNamed:@"apple_on@2x"];
+    NSImage *iphoneOff = [NSImage imageNamed:@"apple_off@2x"];
+    NSImage *androidOn = [NSImage imageNamed:@"android_on@2x"];
+    NSImage *androidOff = [NSImage imageNamed:@"android_off@2x"];
 
-    int clickedSegment = [sender selectedSegment];
+
+
+    long clickedSegment = [sender selectedSegment];
     CGFloat backingScaleFactor = self.window.screen.backingScaleFactor;
 
     if (clickedSegment == currentSegment) {
@@ -165,9 +185,13 @@ static NSString *SearchToolbarItemIdentifier = @"My Search Toolbar Item";
         NSImage *androidPhoneImage;
         if (clickedSegment == 1) {
             androidPhoneImage = [NSImage imageNamed:@"nexus@2x"];
+            [device setImage:iphoneOff forSegment:0];
+            [device setImage:androidOn forSegment:1];
         }
         else {
             androidPhoneImage = [NSImage imageNamed:@"iphone_white@2x"];
+            [device setImage:iphoneOn forSegment:0];
+            [device setImage:androidOff forSegment:1];
         }
         NSSize phoneImageSize = androidPhoneImage.size;
         [_centerView setFrame:(CGRect){0,0,(isRetina ? phoneImageSize.width : phoneImageSize.width*2),(isRetina ? phoneImageSize.height : phoneImageSize.height*2)}];
@@ -182,9 +206,9 @@ static NSString *SearchToolbarItemIdentifier = @"My Search Toolbar Item";
         [self contentViewBoundsDidChange:nil];
 
     }
-
     currentSegment = [device selectedSegment];
 }
+
 
 
 - (IBAction)menuItemLogClicked:(NSMenuItem *)sender {
@@ -193,6 +217,23 @@ static NSString *SearchToolbarItemIdentifier = @"My Search Toolbar Item";
     NSString *url = [[[[frame dataSource] request] URL] absoluteString];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     [prototypeWebView.mainFrame loadRequest:requestObj];
+
 }
+
+- (IBAction)menuToggleHandClicked:(NSMenuItem *)sender {
+    if (hasHand) {
+        [_handImageLayer removeFromSuperlayer];
+        hasHand = !hasHand;
+    } else {
+        [_handLayer addSublayer:_handImageLayer];
+        hasHand = !hasHand;
+    }
+
+}
+
+
+
+
+
 
 @end

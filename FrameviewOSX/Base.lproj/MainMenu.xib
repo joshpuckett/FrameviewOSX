@@ -15,6 +15,7 @@
             <connections>
                 <outlet property="device" destination="6LE-zu-Rk8" id="JZj-3h-jMn"/>
                 <outlet property="menuItemLog" destination="2nh-0F-yMw" id="8q0-2B-Ptt"/>
+                <outlet property="menuToggleHand" destination="Bsl-yR-y2C" id="kGh-ZV-79Z"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="4PI-gp-NIw"/>
             </connections>
         </customObject>
@@ -72,6 +73,11 @@
                             <menuItem title="Refresh" keyEquivalent="r" id="2nh-0F-yMw">
                                 <connections>
                                     <action selector="menuItemLogClicked:" target="Voe-Tx-rLC" id="wKS-Wf-jb5"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Toggle Hand" state="on" keyEquivalent="j" id="Bsl-yR-y2C">
+                                <connections>
+                                    <action selector="menuToggleHandClicked:" target="Voe-Tx-rLC" id="pHV-bS-zIL"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -139,6 +145,28 @@
                             </connections>
                         </segmentedControl>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="947B45F1-D7D8-4E90-BFFA-193DF20DFD48" label="Custom View" paletteLabel="Custom View" id="9eX-8D-clw">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="100" height="25"/>
+                        <size key="maxSize" width="105" height="25"/>
+                        <popUpButton key="view" verticalHuggingPriority="750" id="Krl-AB-UMz">
+                            <rect key="frame" x="0.0" y="14" width="105" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                            <popUpButtonCell key="cell" type="roundTextured" title="Item 1" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="4IE-Ss-qOV" id="umP-Eh-Rmg">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                                <menu key="menu" title="OtherViews" id="RpF-Se-qyh">
+                                    <items>
+                                        <menuItem title="Item 1" state="on" id="4IE-Ss-qOV"/>
+                                        <menuItem title="Item 2" id="REt-5F-qW1"/>
+                                        <menuItem title="Item 3" id="E2B-e5-uvh"/>
+                                    </items>
+                                </menu>
+                            </popUpButtonCell>
+                        </popUpButton>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="fYw-eZ-Eoq"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="mGB-Pk-PEY"/>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="ZkU-AL-DGC"/>

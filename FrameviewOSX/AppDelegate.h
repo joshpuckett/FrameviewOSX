@@ -8,15 +8,19 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
+#import "CustomWebView.h"
 
-@interface AppDelegate : NSObject <NSWindowDelegate>
+@interface AppDelegate : NSView <NSWindowDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
-@property (strong) WebView *prototypeWebView;
+@property (strong) CustomWebView *prototypeWebView;
 @property (weak) IBOutlet NSSegmentedControl *device;
 - (IBAction)deviceDidChange:(NSSegmentedControl *)sender;
 @property (weak) IBOutlet NSMenuItem *menuItemLog;
 - (IBAction)menuItemLogClicked:(NSMenuItem *)sender;
+@property (weak) IBOutlet NSMenuItem *menuToggleHand;
+- (IBAction)menuToggleHandClicked:(NSMenuItem *)sender;
+
 
 
 
