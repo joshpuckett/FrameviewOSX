@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <WebKit/WebKit.h>
+#import "CursorBobble.h"
 #import "CustomWebView.h"
 
 @implementation AppDelegate
@@ -51,14 +52,14 @@
 
 
     //Set up the hand view
-    NSImage *handImage = [NSImage imageNamed:@"hand@2x"];
+    NSImage *handImage = [NSImage imageNamed:@"hand"];
     NSSize handImageSize = handImage.size;
-    _handView = [[NSView alloc] initWithFrame:(NSRect){0,0,(isRetina ? handImageSize.width : handImageSize.width*2), (isRetina ? handImageSize.height : handImageSize.height * 2)}];
+    _handView = [[NSView alloc] initWithFrame:(NSRect){0,0,(isRetina ? handImageSize.width : handImageSize.width*2), (isRetina ? handImageSize.height : handImageSize.height*2)}];
     _handView.wantsLayer = YES;
     _handLayer = _handView.layer;
     _handImageLayer = [CALayer layer];
     _handImageLayer.contents = [handImage layerContentsForContentsScale:backingScaleFactor];
-    _handImageLayer.frame = (CGRect){0,0,(isRetina ? handImageSize.width : handImageSize.width *2), (isRetina ? handImageSize.height : handImageSize.height * 2)};
+    _handImageLayer.frame = (CGRect){0,0,(isRetina ? handImageSize.width : handImageSize.width*2), (isRetina ? handImageSize.height : handImageSize.height*2)};
     [_handLayer addSublayer:_handImageLayer];
     [_contentView addSubview:_handView];
 
@@ -88,6 +89,8 @@
     [prototypeWebView.mainFrame loadRequest:requestObj];
     [prototypeWebView.mainFrame.frameView setAllowsScrolling:NO];
     prototypeWebView.frameLoadDelegate = self;
+    [prototypeWebView setUIDelegate:self];
+
 
     [_contentView setPostsFrameChangedNotifications:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contentViewBoundsDidChange:) name:NSViewFrameDidChangeNotification object:_contentView];
@@ -97,7 +100,25 @@
     currentSegment = [device selectedSegment];
     [device setImage:iphoneImage forSegment:currentSegment];
 
+    NSImage *iphoneOn = [NSImage imageNamed:@"apple_on"];
+    NSImage *androidOff = [NSImage imageNamed:@"android_off"];
+
+
+    [device setImage:iphoneOn forSegment:0];
+    [device setImage:androidOff forSegment:1];
+
 }
+
+- (void)webView:(WebView *)sender mouseDidMoveOverElement:
+(NSDictionary *)elementInformation modifierFlags:(unsigned long)
+modifierFlags
+{
+        NSLog(@"@%lu", (unsigned long)[[NSApp currentEvent] type]);
+//    else if ([[NSApp currentEvent] type] == NSLeftMouseUp)
+//        NSLog(@"web view mouse up");
+}
+
+
 
 
 
@@ -169,10 +190,10 @@
 
 - (IBAction)deviceDidChange:(NSSegmentedControl *)sender {
 
-    NSImage *iphoneOn = [NSImage imageNamed:@"apple_on@2x"];
-    NSImage *iphoneOff = [NSImage imageNamed:@"apple_off@2x"];
-    NSImage *androidOn = [NSImage imageNamed:@"android_on@2x"];
-    NSImage *androidOff = [NSImage imageNamed:@"android_off@2x"];
+    NSImage *iphoneOn = [NSImage imageNamed:@"apple_on"];
+    NSImage *iphoneOff = [NSImage imageNamed:@"apple_off"];
+    NSImage *androidOn = [NSImage imageNamed:@"android_on"];
+    NSImage *androidOff = [NSImage imageNamed:@"android_off"];
 
 
 
@@ -230,6 +251,13 @@
     }
 
 }
+
+- (void)applicationWillBecomeActive:(NSNotification *)notification {
+    NSLog(@"will become active");
+    [self resetCursorRects];
+
+}
+
 
 
 

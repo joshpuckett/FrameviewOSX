@@ -10,6 +10,5 @@
 
 @interface CustomWebView : WebView
 
-@property (strong) NSCursor* _bobble;
-
+@property (strong) NSTrackingArea* webviewTrackingArea;
 @end

@@ -116,7 +116,7 @@
             <rect key="contentRect" x="335" y="390" width="800" height="800"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1028"/>
             <value key="minSize" type="size" width="100" height="200"/>
-            <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
+            <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ" customClass="CursorBobble">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="800"/>
                 <autoresizingMask key="autoresizingMask"/>
             </view>
@@ -124,7 +124,7 @@
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="1D96236D-6339-47E2-94AB-6B42BA61A1F2" label="" paletteLabel="" id="ZkU-AL-DGC">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="67" height="25"/>
+                        <size key="minSize" width="67" height="24"/>
                         <size key="maxSize" width="207" height="40"/>
                         <segmentedControl key="view" verticalHuggingPriority="750" id="6LE-zu-Rk8">
                             <rect key="frame" x="0.0" y="14" width="95" height="25"/>
@@ -132,7 +132,7 @@
                             <segmentedCell key="cell" alignment="left" style="texturedRounded" trackingMode="selectOne" id="7nP-wA-yvn">
                                 <font key="font" metaFont="system"/>
                                 <segments>
-                                    <segment image="apple_on" imageScaling="none" width="44" selected="YES">
+                                    <segment image="apple_on" width="44" selected="YES">
                                         <nil key="label"/>
                                     </segment>
                                     <segment image="android_off" width="44" tag="1">
@@ -154,7 +154,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                             <popUpButtonCell key="cell" type="roundTextured" title="Item 1" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="4IE-Ss-qOV" id="umP-Eh-Rmg">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
+                                <font key="font" metaFont="menu"/>
                                 <menu key="menu" title="OtherViews" id="RpF-Se-qyh">
                                     <items>
                                         <menuItem title="Item 1" state="on" id="4IE-Ss-qOV"/>
@@ -175,7 +175,7 @@
         </window>
     </objects>
     <resources>
-        <image name="android_off" width="10.5" height="13"/>
-        <image name="apple_on" width="10.5" height="12.5"/>
+        <image name="android_off" width="11" height="14"/>
+        <image name="apple_on" width="10" height="13"/>
     </resources>
 </document>

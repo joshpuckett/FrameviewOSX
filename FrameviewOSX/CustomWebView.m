@@ -9,7 +9,11 @@
 #import "CustomWebView.h"
 
 @implementation CustomWebView
-@synthesize _bobble;
+{
+    NSCursor *_bobble;
+    NSCursor *_bobblePress;
+
+}
 
 - (id)initWithFrame:(NSRect)frameRect
 {
@@ -23,22 +27,43 @@
 -(void)drawRect:(NSRect)dirtyRect
 {
     //Drawing code here
+    _bobble = [[NSCursor alloc] initWithImage:[NSImage imageNamed:@"bobble"] hotSpot:NSMakePoint(22, 22)];
+    _bobblePress = [[NSCursor alloc] initWithImage:[NSImage imageNamed:@"bobble_press"] hotSpot:NSMakePoint(22, 22)];
 }
 
--(void)mouseEntered:(NSEvent *)theEvent {
-    [[self window] invalidateCursorRectsForView:self];
+- (void)updateTrackingAreas
+{
+    int opts = (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways | NSTrackingCursorUpdate | NSTrackingActiveInActiveApp);
+    _webviewTrackingArea = [ [NSTrackingArea alloc] initWithRect:[self bounds]
+                                                  options:opts
+                                                    owner:self
+                                                 userInfo:nil];
+    [self addTrackingArea:_webviewTrackingArea];
 }
 
--(void)mouseExited:(NSEvent *)theEvent {
-    [[self window] invalidateCursorRectsForView:self];
+-(void)mouseEntered:(NSEvent *)theEvent
+{
+    [self resetCursorRects];
+}
+
+-(void)mouseExited:(NSEvent *)theEvent
+{
+}
+
+-(void)mouseDown:(NSEvent *)theEvent
+{
+    NSLog(@"Mouse down in webview");
+}
+
+-(void)mouseUp:(NSEvent *)theEvent
+{
+    NSLog(@"Mouse up in webview");
 }
 
 - (void)resetCursorRects
 {
     [self discardCursorRects];
-    _bobble = [[NSCursor alloc] initWithImage:[NSImage imageNamed:@"bobble"] hotSpot:NSMakePoint(16, 16)];
     [self addCursorRect:[self bounds] cursor:_bobble];
-        NSLog(@"webview cursor reset was called");
 }
 
 
